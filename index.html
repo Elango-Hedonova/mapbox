@@ -22,9 +22,10 @@
         "pk.eyJ1IjoiZWxhbmdvLWhlZG9ub3ZhIiwiYSI6ImNsY29zbmM1OTZ6dWMzeGxranF1MWwwN2sifQ.idBke_LeHCrTb0WfoMl-sA";
       const map = new mapboxgl.Map({
         container: "map", // container ID
+        projection: "mercator",
         style: "mapbox://styles/elango-hedonova/clcq9vuz100aq14lcftis4cso", // style URL
-        center: [77.414088, 12.089514], // starting position [lng, lat]
-        zoom: 1, // starting zoom
+        center: [22.70668, 38.974357], // starting position [lng, lat]
+        zoom: 1.5, // starting zoom
       });
 
       map.on("load", function () {
@@ -38,8 +39,8 @@
             "source-layer": "country_boundaries",
             type: "fill",
             paint: {
-              "fill-color": "#d2361e",
-              "fill-opacity": 0.4,
+              "fill-color": "#04946C",
+              "fill-opacity": 0.2,
             },
           },
           "country-label"
@@ -48,9 +49,16 @@
         map.setFilter("country-boundaries", [
           "in",
           "iso_3166_1_alpha_3",
-          "NLD",
-          "ITA",
+          // "NLD",
+          // "ITA",
+          // "AUS",
+          // "NZL",
           "IND",
+          "RUS",
+          "ZAF",
+          "GBR",
+          "ARE",
+          "OMN",
         ]);
       });
     </script>

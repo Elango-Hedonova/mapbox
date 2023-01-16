@@ -10,7 +10,23 @@
       rel="stylesheet"
     />
     <title>Mapbox</title>
-    <style></style>
+    <style>
+      .marker {
+        background-image: url("custom_marker.png");
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .mapboxgl-popup {
+        max-width: 200px;
+      }
+      .mapboxgl-popup-content {
+        text-align: center;
+        font-family: "Open Sans", sans-serif;
+      }
+    </style>
   </head>
   <body>
     <div
@@ -18,6 +34,34 @@
       style="width: 100%; height: 100%; position: absolute; top: 0; left: 0"
     ></div>
     <script>
+      const geojson = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [77.657547, 23.018286],
+            },
+            properties: {
+              title: "We invested in Datacenters and Real estates in India",
+              description: "Description about the investment",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [97.326851, 67.04689],
+            },
+            properties: {
+              title: "We invested in Russia",
+              description: "description about the investment",
+            },
+          },
+        ],
+      };
+
       mapboxgl.accessToken =
         "pk.eyJ1IjoiZWxhbmdvLWhlZG9ub3ZhIiwiYSI6ImNsY29zbmM1OTZ6dWMzeGxranF1MWwwN2sifQ.idBke_LeHCrTb0WfoMl-sA";
       const map = new mapboxgl.Map({
@@ -60,6 +104,22 @@
           "ARE",
           "OMN",
         ]);
+        for (const feature of geojson.features) {
+          // create a HTML element for each feature
+          const el = document.createElement("div");
+          el.className = "marker";
+
+          // make a marker for each feature and add it to the map
+          new mapboxgl.Marker(el)
+            .setLngLat(feature.geometry.coordinates)
+            .setPopup(
+              new mapboxgl.Popup({ offset: 25 }) // add popups
+                .setHTML(
+                  `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
+                )
+            )
+            .addTo(map);
+        }
       });
     </script>
   </body>
